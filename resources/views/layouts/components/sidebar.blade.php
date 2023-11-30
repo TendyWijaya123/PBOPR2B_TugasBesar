@@ -44,8 +44,7 @@ $links = [
                 "section_href" => route('akun.add')
             ]
         ]
-    ],
-    [
+    ], [
       "text" => "Kelola Pesanan",
         "icon" => "fas fa-users",
         "is_multi" => true,
