@@ -42,16 +42,29 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::delete('{id}/hapus', 'hapusAkun')->name('delete');
         });
 
-        Route::controller(MakananController::class)
-        ->prefix('makanan')
-        ->as('makanan.')
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('showdataMakanan', 'showMakanan')->name('showMakanan');
-            Route::match(['get','post'],'tambah', 'tambahMakanan')->name('add');
-            Route::match(['get','post'],'{id}/ubah', 'ubahMakanan')->name('edit');
-            Route::delete('{id}/hapus', 'hapusMakanan')->name('delete');
+        // Route::controller(MakananController::class)
+        // ->prefix('makanan')
+        // ->as('makanan.')
+        // ->group(function () {
+        //     Route::get('/', 'index')->name('index');
+        //     Route::post('showdataMakanan', 'showMakanan')->name('showMakanan');
+        //     Route::match(['get','post'],'tambah', 'tambahMakanan')->name('add');
+        //     Route::match(['get','post'],'{id}/ubah', 'ubahMakanan')->name('edit');
+        //     Route::delete('{id}/hapus', 'hapusMakanan')->name('delete');
+        //     Route::get('export_excel', 'export_excel')->name('export.excel');
+        // });
+        
+        Route::prefix('makanan')->name('makanan.')->group(function () {
+            Route::get('/', [MakananController::class, 'index'])->name('index');
+            Route::post('showdataMakanan', [MakananController::class, 'showMakanan'])->name('showMakanan');
+            Route::match(['get', 'post'], 'tambah', [MakananController::class, 'tambahMakanan'])->name('add');
+            Route::match(['get', 'post'], '{id}/ubah', [MakananController::class, 'ubahMakanan'])->name('edit');
+            Route::delete('{id}/hapus', [MakananController::class, 'hapusMakanan'])->name('delete');
+            Route::get('export_excel', [MakananController::class, 'export_excel'])->name('export.excel');
         });
+
+
+
 });
 
 

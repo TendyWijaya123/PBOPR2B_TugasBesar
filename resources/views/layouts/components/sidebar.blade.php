@@ -44,6 +44,28 @@ $links = [
                 "section_href" => route('akun.add')
             ]
         ]
+    ],
+    [
+      "text" => "Kelola Pesanan",
+        "icon" => "fas fa-users",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Daftar Makanan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('makanan.index')
+            ],
+            [
+                "section_text" => "Tambahkan Makanan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('makanan.add')
+            ],
+            [
+                "section_text" => "Edit Makanan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('akun.add')
+            ]
+        ]
     ]
 ];
 $navigation_links = json_decode(json_encode($links));

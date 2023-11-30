@@ -43,6 +43,7 @@
                 </div>
             </div>
             <div class="card-body p-0" style="margin: 20px">
+                <a href="{{ url('dashboard/admin/makanan/export_excel') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
                 <table id="previewMakanan" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>

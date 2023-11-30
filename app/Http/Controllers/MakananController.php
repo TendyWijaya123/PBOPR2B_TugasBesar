@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\MakananExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MakananController extends Controller
 {
@@ -155,5 +157,10 @@ class MakananController extends Controller
             'msg' => 'Data yang dipilih telah dihapus'
         ]);
     }
+
+    public function export_excel()
+	{
+		return Excel::download(new MakananExport, 'Makanan.xlsx');
+	}
 
 }
