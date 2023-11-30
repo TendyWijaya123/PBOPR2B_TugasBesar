@@ -50,17 +50,17 @@ $links = [
         "is_multi" => true,
         "href" => [
             [
-                "section_text" => "Daftar Makanan",
+                "section_text" => "Daftar Pesanan",
                 "section_icon" => "far fa-circle",
-                "section_href" => route('makanan.index')
+                "section_href" => route('pesanan.index')
             ],
             [
-                "section_text" => "Tambahkan Makanan",
+                "section_text" => "Tambahkan Pesanan",
                 "section_icon" => "far fa-circle",
-                "section_href" => route('makanan.add')
+                "section_href" => route('pesanan.add')
             ],
             [
-                "section_text" => "Edit Makanan",
+                "section_text" => "Edit Pesanan",
                 "section_icon" => "far fa-circle",
                 "section_href" => route('akun.add')
             ]

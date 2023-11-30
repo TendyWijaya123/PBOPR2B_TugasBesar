@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MakananController;
+use App\Http\Controllers\PesananController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +63,16 @@ Route::group(['prefix' => 'dashboard/admin'], function () {
             Route::match(['get', 'post'], '{id}/ubah', [MakananController::class, 'ubahMakanan'])->name('edit');
             Route::delete('{id}/hapus', [MakananController::class, 'hapusMakanan'])->name('delete');
             Route::get('export_excel', [MakananController::class, 'export_excel'])->name('export.excel');
+        });
+
+        Route::prefix('pesanan')
+        ->as('pesanan.')
+        ->group(function () {
+            Route::get('/', [PesananController::class, 'index'])->name('index');
+            Route::post('showdataPesanan', [PesananController::class, 'showPesanan'])->name('showPesanan');
+            Route::match(['get', 'post'], 'tambah', [PesananController::class, 'tambahPesanan'])->name('add');
+            Route::match(['get', 'post'], '{id}/ubah', [PesananController::class, 'ubahPesanan'])->name('edit');
+            Route::delete('{id}/hapus', [PesananController::class, 'hapusPesanan'])->name('delete');
         });
 
 
