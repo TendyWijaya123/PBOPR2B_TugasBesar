@@ -91,32 +91,38 @@ class AkunController extends Controller
     }
 
     public function tambahAkun(Request $request)
-    {
-        if ($request->isMethod('post')) {
+{
+    if ($request->isMethod('post')) {
 
-            $this->validate($request, [
-                'name' => 'required|string|max:200|min:3',
-                'email' => 'required|string|min:3|email|unique:users,email',
-                'password' => 'required|min:8|confirmed',
-                'password_confirmation' => 'required|min:8',
-                'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
-            ]);
-            $img = null;
-            if ($request->file('user_image')) {
-                $nama_gambar = time() . '_' . $request->file('user_image')->getClientOriginalName();
-                $upload = $request->user_image->storeAs('public/admin/user_profile', $nama_gambar);
-                $img = Storage::url($upload);
-            }
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'user_image' => $img
-            ]);
-            return redirect()->route('akun.add')->with('status', 'Data telah tersimpan di database');
+        $this->validate($request, [
+            'name' => 'required|string|max:200|min:3',
+            'email' => 'required|string|min:3|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8',
+            'user_image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:1024'
+        ]);
+        $img = null;
+        if ($request->file('user_image')) {
+            $nama_gambar = time() . '_' . $request->file('user_image')->getClientOriginalName();
+            $upload = $request->user_image->storeAs('public/admin/user_profile', $nama_gambar);
+            $img = Storage::url($upload);
         }
-        return view('page.admin.akun.addAkun');
+
+        // Set the default role to "user"
+        $role = 'user';
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'user_image' => $img,
+            'role' => $role,
+        ]);
+
+        return redirect()->route('akun.add')->with('status', 'Data telah tersimpan di database');
     }
+    return view('page.admin.akun.addAkun');
+}
 
     public function ubahAkun($id, Request $request)
     {

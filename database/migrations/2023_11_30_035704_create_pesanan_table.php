@@ -15,6 +15,8 @@ class CreatePesananTable extends Migration
     {
         Schema::create('Pesanan', function (Blueprint $table) {
             $table->id('idPesanan'); // Kolom primary key
+            $table->unsignedBigInteger('user_id'); // Foreign key untuk user
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('namaPemesan');
             $table->decimal('totalHarga', 8, 2); // Misalnya, harga dengan dua digit di belakang koma
             $table->string('status');
@@ -29,6 +31,7 @@ class CreatePesananTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('Pesanan');
     }
 }

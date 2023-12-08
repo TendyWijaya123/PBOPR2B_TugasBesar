@@ -14,7 +14,7 @@ class Pesanan extends Model
      *
      * @var string
      */
-    protected $table = 'Pesanan';
+    protected $table = 'pesanan';
 
     /**
      * The primary key for the model.
@@ -29,18 +29,17 @@ class Pesanan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'idPesanan',
         'namaPemesan',
         'totalHarga',
-        'status'
+        'status',
+        'user_id', // Added foreign key
     ];
 
-    // /**
-    //  * The attributes that should be cast.
-    //  *
-    //  * @var array<string, string>
-    //  */
-    // protected $casts = [
-    //     'harga' => 'float',
-    // ];
+    /**
+     * Get the user that owns the order.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

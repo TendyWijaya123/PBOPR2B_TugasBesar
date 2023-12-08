@@ -1,5 +1,5 @@
-@extends('layouts.base_admin.base_dashboard')
-@section('judul', 'Halaman Dashboard')
+@extends('layouts.base_user.base_dashboarduser')
+@section('judul', 'Halaman Dashboard User')
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -32,7 +32,7 @@
                             </div>
                         @endif
 
-                        {{ __('You are logged in! as admin') }}
+                        {{ __('You are logged in as user!') }}
                     </div>
                 </div>
             </div>

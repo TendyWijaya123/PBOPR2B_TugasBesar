@@ -1,6 +1,6 @@
-@extends('layouts.base_admin.base_dashboard')
+@extends('layouts.base_user.base_dashboarduser')
 
-@section('judul', 'List Pesanan')
+@section('judul', 'List Makanan')
 
 @section('script_head')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
@@ -12,14 +12,14 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Data Pesanan</h1>
+                    <h1>Data Makanan</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('home') }}">Beranda</a>
                         </li>
-                        <li class="breadcrumb-item active">Pesanan</li>
+                        <li class="breadcrumb-item active">Makanan</li>
                     </ol>
                 </div>
             </div>
@@ -43,14 +43,14 @@
                 </div>
             </div>
             <div class="card-body p-0" style="margin: 20px">
-                <table id="previewPesanan" class="table table-striped table-bordered display" style="width:100%">
+                <!-- <a href="{{ url('dashboard/user/makanan/export_excel') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a> -->
+                <table id="previewMakanan" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nama Pemesan</th>
-                            <th>Total Harga</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>Nama Makanan</th>
+                            <th>Harga Makanan</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -68,11 +68,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#previewPesanan').DataTable({
+            $('#previewMakanan').DataTable({
                 "serverSide": true,
                 "processing": true,
                 "ajax": {
-                    "url": "{{ route('pesanan.showPesanan') }}",
+                    "url": "{{ route('user.makanan.user.showMakanan') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data": {
@@ -84,15 +84,14 @@
                     }
                 },
                 "columns": [
-                    { "data": "idPesanan" },
-                    { "data": "namaPemesan" },
-                    { "data": "totalHarga" },
-                    { "data": "status" },
-                    { 
-                        "data": "options",
-                        "orderable": false,
-                        "searchable": false
-                    },
+                    { "data": "idMakanan" },
+                    { "data": "namaMakanan" },
+                    { "data": "hargaMakanan" },
+                    // { 
+                    //     "data": "options",
+                    //     "orderable": false,
+                    //     "searchable": false
+                    // },
                 ],
                 "language": {
                     // ... Your language settings ...
@@ -104,7 +103,7 @@
             });
 
             // hapus data
-            $('#previewPesanan').on('click', '.hapusData', function () {
+            $('#previewMakanan').on('click', '.hapusData', function () {
                 var id = $(this).data("id");
                 var url = $(this).data("url");
                 Swal.fire({
@@ -127,7 +126,7 @@
                             },
                             success: function (response) {
                                 Swal.fire('Terhapus!', response.msg, 'success');
-                                $('#previewPesanan').DataTable().ajax.reload();
+                                $('#previewMakanan').DataTable().ajax.reload();
                             },
                             error: function (xhr, error, thrown) {
                                 console.error('Ajax Error:', xhr, error, thrown);

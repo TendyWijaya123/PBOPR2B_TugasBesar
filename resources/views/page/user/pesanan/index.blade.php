@@ -1,4 +1,4 @@
-@extends('layouts.base_admin.base_dashboard')
+@extends('layouts.base_user.base_dashboarduser')
 
 @section('judul', 'List Pesanan')
 
@@ -50,7 +50,7 @@
                             <th>Nama Pemesan</th>
                             <th>Total Harga</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <!-- <th>Action</th> -->
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -72,7 +72,7 @@
                 "serverSide": true,
                 "processing": true,
                 "ajax": {
-                    "url": "{{ route('pesanan.showPesanan') }}",
+                    "url": "{{ route('user.pesanan.user.showPesanan') }}",
                     "dataType": "json",
                     "type": "POST",
                     "data": {
@@ -87,12 +87,12 @@
                     { "data": "idPesanan" },
                     { "data": "namaPemesan" },
                     { "data": "totalHarga" },
-                    { "data": "status" },
-                    { 
-                        "data": "options",
-                        "orderable": false,
-                        "searchable": false
-                    },
+                    { "data": "Status" },
+                    // { 
+                    //     "data": "options",
+                    //     "orderable": false,
+                    //     "searchable": false
+                    // },
                 ],
                 "language": {
                     // ... Your language settings ...
