@@ -9,6 +9,8 @@ use App\Http\Controllers\MakananController;
 use App\Http\Controllers\MakananUserController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\PesananUserController;
+use App\Http\Controllers\DetailPesananController;
+
 
 
 
@@ -105,5 +107,12 @@ Route::group(['prefix' => 'dashboard/user', 'middleware' => ['auth', 'role:user'
             Route::match(['get', 'post'], 'tambah', [PesananUserController::class, 'tambahPesanan'])->name('user.add');
             Route::match(['get', 'post'], '{id}/ubah', [PesananUserController::class, 'ubahPesanan'])->name('user.edit');
             Route::delete('{id}/hapus', [PesananUserController::class, 'hapusPesanan'])->name('user.delete');
+            Route::get('get-makanan-list', [PesananUserController::class, 'getMakananList'])->name('user.getMakananList');
         });
+
+    Route::prefix('detail-pesanan')->name('user.detail-pesanan.')->group(function () {
+        Route::get('/', [DetailPesananController::class, 'index'])->name('user.index');
+        Route::post('showdataDetailPesanan', [DetailPesananController::class, 'showDetailPesanan'])->name('user.showDetailPesanan');
+        // Tambahkan rute tambah, ubah, dan hapus jika diperlukan
+    });
 });

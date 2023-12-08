@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Pesanan;
+use App\Models\Makanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\QueryException;
 use App\Enums\StatusPesanan;
+use Illuminate\Support\Facades\DB;
+
 
 class PesananUserController extends Controller
 {
@@ -27,6 +30,18 @@ class PesananUserController extends Controller
     {
         return view('page.user.pesanan.index');
     }
+
+    public function getMakananList(Request $request)
+    {
+        $search = $request->input('search');
+    
+        $makananList = Makanan::where('namaMakanan', 'LIKE', '%' . $search . '%')
+            ->select('idMakanan', 'namaMakanan', 'hargaMakanan')
+            ->get();
+    
+        return response()->json($makananList);
+    }
+    
 
     public function showPesanan(Request $request)
     {
@@ -129,6 +144,8 @@ class PesananUserController extends Controller
 }
 
 
+
+
     
 public function tambahPesanan(Request $request)
 {
@@ -136,13 +153,38 @@ public function tambahPesanan(Request $request)
         if ($request->isMethod('post')) {
             $user_id = Auth::id(); // Mendapatkan ID pengguna yang sedang login
 
-            Pesanan::create([
+            // Create a new Pesanan instance
+            $pesanan = Pesanan::create([
                 'user_id' => $user_id,
                 'namaPemesan' => $request->namaPemesan,
                 'totalHarga' => $request->totalHarga,
                 'status' => $request->status,
                 // Tambahkan kolom lain sesuai kebutuhan
             ]);
+            
+
+           // Iterate through the pesananList and insert each item into detail_pesanan
+            foreach ($request->pesananList['idMakanan'] as $key => $idMakanan) {
+                $makanan = Makanan::find($idMakanan); // Retrieve the Makanan model
+                $hargaSatuan = $makanan->hargaMakanan; // Get the hargaSatuan from the Makanan model
+                try {
+                    // Your database operations here
+                    DB::table('detail_pesanan')->insert([
+                        'idPesanan' => $pesanan->idPesanan, // Use the ID of the created pesanan
+                        'jumlah' => $request->pesananList['jumlah'][$key],
+                        'hargasatuan' => $hargaSatuan, // Insert hargaSatuan
+                        'total' => $request->pesananList['jumlah'][$key] * $hargaSatuan, // Calculate the total harga
+                        'idMakanan' => $idMakanan,
+                        // Add other columns as needed
+                    ]);
+                } catch (\Exception $e) {
+                    // Log or print the exception
+                    dd($e->getMessage());
+                }
+                
+                
+            }
+
 
             return redirect()->route('user.pesanan.user.add')->with('status', 'Data telah tersimpan di database');
         }

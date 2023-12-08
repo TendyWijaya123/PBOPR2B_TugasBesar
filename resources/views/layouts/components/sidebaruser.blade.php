@@ -38,6 +38,18 @@ $links = [
                 "section_href" => route('user.akun.user.add')
             ]
         ]
+    ],
+    [
+        "text" => "Kelola Detail Pesanan",
+        "icon" => "fas fa-users",
+        "is_multi" => true,
+        "href" => [
+            [
+                "section_text" => "Daftar Detail Pesanan",
+                "section_icon" => "far fa-circle",
+                "section_href" => route('user.detail-pesanan.user.index')
+            ]
+        ]
     ]
 ];
 $navigation_links = json_decode(json_encode($links));
