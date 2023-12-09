@@ -1,6 +1,6 @@
 @extends('layouts.base_user.base_dashboarduser')
 
-@section('judul', 'List Detail Pesanan')
+@section('judul', 'List Pesanan')
 
 @section('script_head')
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
@@ -19,7 +19,7 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('home') }}">Beranda</a>
                         </li>
-                        <li class="breadcrumb-item active">Detail Pesanan</li>
+                        <li class="breadcrumb-item active">Pesanan</li>
                     </ol>
                 </div>
             </div>
@@ -28,6 +28,7 @@
 
     <!-- Main content -->
     <section class="content">
+
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <div class="card-body p-0" style="margin: 20px">
-                <table id="previewDetailPesanan" class="table table-striped table-bordered display" style="width:100%">
+                <table id="previewPesanan" class="table table-striped table-bordered display" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -51,7 +52,7 @@
                             <th>Harga Satuan</th>
                             <th>Jumlah</th>
                             <th>Total</th>
-                            <!-- <th>Action</th> -->
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -60,6 +61,7 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
+
     </section>
 @endsection
 
@@ -68,7 +70,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#previewDetailPesanan').DataTable({
+            $('#previewPesanan').DataTable({
                 "serverSide": true,
                 "processing": true,
                 "ajax": {
@@ -84,17 +86,17 @@
                     }
                 },
                 "columns": [
-                    { "data": "idDetail" },
+                    { "data": "id" },
                     { "data": "idPesanan" },
                     { "data": "idMakanan" },
                     { "data": "hargasatuan" },
                     { "data": "jumlah" },
                     { "data": "total" },
-                    // { 
-                    //     "data": "options",
-                    //     "orderable": false,
-                    //     "searchable": false
-                    // },
+                    { 
+                        "data": "options",
+                        "orderable": false,
+                        "searchable": false
+                    },
                 ],
                 "language": {
                     // ... Your language settings ...
@@ -105,8 +107,8 @@
                 }
             });
 
-            // hapus data
-            $('#previewDetailPesanan').on('click', '.hapusData', function () {
+            // delete and edit buttons
+            $('#previewPesanan').on('click', '.hapusData', function () {
                 var id = $(this).data("id");
                 var url = $(this).data("url");
                 Swal.fire({
@@ -129,7 +131,7 @@
                             },
                             success: function (response) {
                                 Swal.fire('Terhapus!', response.msg, 'success');
-                                $('#previewDetailPesanan').DataTable().ajax.reload();
+                                $('#previewPesanan').DataTable().ajax.reload();
                             },
                             error: function (xhr, error, thrown) {
                                 console.error('Ajax Error:', xhr, error, thrown);
@@ -138,6 +140,14 @@
                         });
                     }
                 });
+            });
+
+            // Edit button (you can customize this)
+            $('#previewPesanan').on('click', '.editData', function () {
+                // Add your edit logic here
+                // You can open a modal, redirect to an edit page, etc.
+                var id = $(this).data("id");
+                // Add your edit logic here
             });
         });
     </script>

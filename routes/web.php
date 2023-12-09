@@ -113,6 +113,8 @@ Route::group(['prefix' => 'dashboard/user', 'middleware' => ['auth', 'role:user'
     Route::prefix('detail-pesanan')->name('user.detail-pesanan.')->group(function () {
         Route::get('/', [DetailPesananController::class, 'index'])->name('user.index');
         Route::post('showdataDetailPesanan', [DetailPesananController::class, 'showDetailPesanan'])->name('user.showDetailPesanan');
-        // Tambahkan rute tambah, ubah, dan hapus jika diperlukan
+        Route::match(['get', 'post'], '{id}/ubah', [PesananUserController::class, 'ubahDetailPesanan'])->name('user.edit');
+        Route::delete('{id}/hapus', [PesananUserController::class, 'hapusDetailPesanan'])->name('user.delete');
+   
     });
 });
